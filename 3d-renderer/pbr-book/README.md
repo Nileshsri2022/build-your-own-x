@@ -1,7 +1,6 @@
 # 3D Renderer — Physically Based Rendering (PBR Book, Scoped Subset)
 
-Status: **docs only, awaiting the parent's approval to develop.
-No code, no tests, no push from this subagent.**
+Status: **Code built and tested 2026-10-25: C++ scoped subset (path-tracer core), 45 checks + integration PASS.**
 
 ## Source link
 
