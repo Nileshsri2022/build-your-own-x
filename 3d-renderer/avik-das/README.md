@@ -1,7 +1,6 @@
 # 3D Renderer — Build Your Own 3D Renderer
 
-Status: **docs only, awaiting your agreement to develop.
-No code, no tests, no code push yet.**
+Status: **Code built and tested 2026-10-25: Java 11, 33/33 unit checks + integration PASS.**
 
 
 One of the 11 BYOX 3D Renderer doc sets — see the
