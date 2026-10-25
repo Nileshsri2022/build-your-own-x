@@ -1,7 +1,8 @@
 # 3D Renderer — Build Your Own 3D Renderer
 
-Status: **docs only, no code yet. All 11 links below are
-docs only, awaiting your agreement before any code.**
+Status: **Code built, tested and pushed for all 11 links
+below (2026-10-25). Each folder has its own README with its
+test results.**
 
 ## All 11 BYOX 3D Renderer links — docs, one folder each
 
@@ -40,6 +41,6 @@ folder below has the same structure: `README.md` +
 
 ## Next step
 
-Your agreement on which folder(s) to build, then code —
-one folder at a time unless you say parallel — followed by
-a separate push approval for the code, as before.
+All 11 builds are done and pushed. The remaining manual
+checks (Swing window for Rogach, OpenGL window for
+AOSABOOK) need a machine with a display.
