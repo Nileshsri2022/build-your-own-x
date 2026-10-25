@@ -3,6 +3,46 @@
 Status: **docs only, awaiting your agreement to develop.
 No code, no tests, no code push yet.**
 
+## All 11 BYOX 3D Renderer links — docs, one folder each
+
+This directory holds docs for all 11 links in the BYOX
+`3D Renderer` section, not just one tutorial. The BYOX list is
+a compilation of alternative guides, not chapters of one
+project — pick one folder per build. This README and its
+`docs/` are the Avik Das project (the first one documented);
+the other 10 links have their own folders, each with the same
+`README.md` + `docs/` structure, docs only, no code yet:
+
+- this root (`README.md` + `docs/`) — Avik Das, Java/JS,
+  ray tracing, spheres, Phong, shadows, reflections, AA, PNG
+- `scratchapixel-intro-ray-tracing/` — C++, minimal raytracer,
+  spheres, shadow rays, reflection/refraction, PPM
+- `tinyrenderer/` — C++, software OpenGL-style rasterizer,
+  meshes, textures, normal mapping, shadow mapping, TGA
+- `lodev-raycasting/` — C++, raycaster (semi-3D walker,
+  honestly NOT a true 3D renderer), 640×480 screen
+- `pbr-book/` — C++, SCOPED SUBSET ONLY (path-tracer core,
+  ch. 1–7 + 9 + 13), not the whole 16-chapter textbook
+- `ray-tracing-in-one-weekend/` — C++, path tracer, matte /
+  metal / glass spheres, AA, defocus blur, PPM
+- `scratchapixel-rasterization/` — C++, visibility-only
+  rasterizer, triangles, z-buffer, PPM, no shading in this
+  lesson (stated honestly)
+- `davrous-soft-engine/` — C#/TypeScript/JavaScript, animated
+  CPU rasterizer, Blender meshes, Gouraud, textures, Canvas
+- `rogach-java-render-engine/` — Java, small rasterizer,
+  tetrahedron, barycentric fill, z-buffer, flat shading, Swing
+- `gambetta-computer-graphics-from-scratch/` — JavaScript /
+  pseudocode, TWO sub-builds (raytracer + rasterizer), Canvas
+- `aosabook-3d-modeller/` — Python, modeller/editor using
+  OpenGL, honestly NOT a renderer build, GLUT window
+
+Note: the Avik Das docs live at this root (`README.md` +
+`docs/`), not in an `avik-das/` subfolder, because they were
+already pushed here and the push tool cannot delete the old
+copies — the list above names this root as the Avik project
+for clarity, and no duplicate Avik folder was created.
+
 A ray-tracing 3D renderer in **Java 11 + Maven**, built from the
 Build Your Own X entry for 3D Renderer:
 
