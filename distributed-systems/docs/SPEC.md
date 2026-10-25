@@ -90,10 +90,16 @@ the length fields inside variable-length parts. Message codes:
 | ERROR_RESPONSE | 0x1F | `uint16 msg_len, msg` |
 
 A broker that receives a request for a partition it does not lead
-replies with an error naming the leader (or forwards to the
-controller for CREATE_TOPIC, as the tutorial does), and the client
-retries against the leader from metadata. It never silently drops
-a request.
+forwards it to the leader (produce/fetch) or to the controller
+(create-topic), and relays the response — so any bootstrap broker
+can serve any request and the client never needs the leader's
+address. This forwarding is a deliberate simplification over the
+tutorial's error-and-retry flow; a dead leader/controller is the
+only case that returns an error. Broker presence nodes in
+ZooKeeper store `host|port` (not `host:port`) so IPv6 hosts like
+`::1` survive. In this sandbox, broker/client hosts are `::1`,
+not `localhost`: Java TCP to 127.0.0.1 is intercepted here, while
+IPv6 loopback works (see README).
 
 ## Log record format (on disk)
 

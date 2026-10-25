@@ -96,3 +96,12 @@ processes behind (kill by explicit PID in a finally block).
 - Nothing may be reported as "tested" from this VM until JDK,
   Maven, and ZooKeeper are actually installed and the commands
   above have run.
+
+## Verified 2026-10-25 (this VM, JDK 17 toolchain, target 11)
+
+- Unit tests: 7/7 pass (JUnit console launcher, javac build — Maven
+  Central is unreachable from this VM's Java, see README).
+- Integration (`tests/integration.sh`): PASS — 3 brokers, create
+  topic (3 partitions, replication 2), produce 5 + 3, fetch,
+  follower log on broker 2, kill broker 1, leader promoted to
+  broker 2, produce + fetch after failover (6 messages).

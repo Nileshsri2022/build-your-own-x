@@ -35,7 +35,7 @@ src/test/java/com/simplekafka/
 | `Protocol` | Message codes and encode/decode for every type in SPEC. Pure bytes in, bytes out — unit-testable without a server or ZooKeeper. |
 | `Partition` | Append, fetch-from-offset, segment roll at 1 MiB, index lookup, recovery on open (recompute next offset from the last segment, reject a gap). One read-write lock per partition; writers serialised. |
 | `ZookeeperClient` | Connects to localhost:2181. Creates ephemeral nodes under `/brokers/<id>` (broker presence) and `/controller` (election: first creator wins, others watch). Watches children of `/brokers` and the `/controller` node, firing callbacks on change. Also stores consumer-group offsets under `/consumer-groups/<group>/<topic>/<partition>` as persistent nodes. |
-| `SimpleKafkaBroker` | Threaded (NIO, as in the tutorial) TCP server. Dispatches by type: CREATE_TOPIC (controller only; others forward to the controller or reply with its address), PRODUCE (leader only), FETCH (leader only), METADATA (any broker), REPLICATE (follower appends, replies REPLICATE_ACK). Holds the controller role when it owns `/controller`. |
+| `SimpleKafkaBroker` | Threaded (NIO, as in the tutorial) TCP server. Dispatches by type: CREATE_TOPIC (controller only; others forward to the controller), PRODUCE (leader only, others forward to the leader), FETCH (leader only, others forward to the leader), METADATA (any broker), REPLICATE (follower appends, replies REPLICATE_ACK). Holds the controller role when it owns `/controller`. |
 | `BrokerInfo` | Value object: broker id, host, port. |
 | `SimpleKafkaClient` | Low-level client: connect to a bootstrap broker, metadata, send, fetch, create-topic. Retries once against fresh metadata on a "not leader" error. |
 | `SimpleKafkaProducer` | On top of the client: create the topic if missing (3 partitions, replication 2 by default), pick a partition — explicit, key-hashed (SHA-256), or random — send, return the offset. |
@@ -76,7 +76,7 @@ leader: read from Partition from offset, stop at max_bytes
 leader -> consumer: FETCH_RESPONSE records in offset order
 ```
 
-Fetching from a follower is an error naming the leader. Fetching
+Fetching from a follower is forwarded to the leader. Fetching
 past the high-water mark returns zero records, not an error.
 Fetching before offset 0 is an error.
 
@@ -87,8 +87,7 @@ broker 2 (leader of partition 0) dies
   -> its /brokers/2 ephemeral node disappears
 controller (watching /brokers) promotes the next live replica
   -> new leader, metadata updated
-producer/consumer: next request gets ERROR "not leader",
-  refreshes metadata, retries against the new leader
+producer/consumer: next request is forwarded by any broker to the new leader
 controller dies
   -> its /controller ephemeral node disappears
   -> watching brokers re-run the election; first creator wins
