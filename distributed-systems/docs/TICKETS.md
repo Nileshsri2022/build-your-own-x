@@ -1,54 +1,80 @@
-# TICKETS — Distributed Systems (ask-matt: to-spec → to-tickets)
+# TICKETS — Distributed Systems, Java version (ask-matt: to-spec → to-tickets)
+
+This TICKETS file supersedes the earlier Python TICKETS file in
+full. Ticket order now follows the tutorial's stages 1–8.
 
 Work in ticket order. A ticket is done only when its tests pass.
 Blocking edges are real: do not start a ticket whose blockers are
 not done.
 
-## T1 — Protocol frames (blocks T2, T3, T4, T5)
+Prerequisite for all tickets (not a ticket itself): JDK 11+,
+Maven, and a ZooKeeper server. Checked 2026-10-25: none present in
+this VM. Resolve that before T1's tests can run.
 
-- Implement `Frame`/`Protocol` encode/decode for every type in SPEC.
-- Tests: frame round-trips, truncated frame raises, 0-byte and
-  1 MiB payloads.
-- No sockets, no broker in this ticket.
+## T1 — Project structure + protocol (blocks T2, T3, T4, T5, T6)
 
-## T2 — Partition log (blocks T3, T4, T5)
+- `pom.xml` (Java 11, zookeeper 3.8.1, shade plugin), package
+  `com.simplekafka`, directory layout from DESIGN.
+- `Protocol` encode/decode for every type in SPEC, tutorial framing
+  (no length prefix).
+- Tests: protocol round-trips, truncated input raises, 0-byte and
+  1 MiB payloads. Run: `mvn test`.
 
-- Implement `Segment`/`PartitionLog`: append, fetch, segment roll,
-  index, recovery, gap rejection.
-- Tests: append/fetch, recovery, segment roll, key hashing helper
-  (pure function, lives here so T3 can use it).
+## T2 — ZooKeeper client + controller election (blocks T4, T5, T6)
 
-## T3 — Single broker + producer/consumer (blocks T4, T5)
+- `ZookeeperClient`: connect, ephemeral nodes, children/node
+  watches with callbacks, persistent nodes for consumer-group
+  offsets.
+- Controller election: create `/controller` ephemeral node, first
+  creator wins, watchers re-elect on disappearance.
+- Tests: election (first wins, second watches), re-election after
+  the controller's session ends, broker presence via
+  `/brokers/<id>` ephemeral nodes. Requires a running ZooKeeper
+  server; these tests do not run in a VM without one.
 
-- Implement `Broker` (CREATE_TOPIC, PRODUCE, FETCH, METADATA),
-  `Producer`, `Consumer` (explicit offset + group), CLI.
-- One broker only; replication and controller code are not in this
-  ticket, even as stubs that pretend to work.
-- Tests: single-broker produce/consume, metadata, not-leader error
-  path is deferred — a single broker *is* the leader here — errors,
-  restart, CLI smoke.
+## T3 — Storage layer (blocks T4, T5, T6)
 
-## T4 — Registry and controller (blocks T5)
+- `Partition`: append, fetch, segment roll at 1 MiB, index,
+  recovery, gap rejection. `BrokerInfo` value object.
+- Tests: append/fetch, recovery, segment roll, key-hash helper
+  (pure function, lives here so T5 can use it).
 
-- Implement `Registry` heartbeats/pruning and the controller role:
-  round-robin assignment, topics.json, controller election by
-  lowest live id.
-- Tests: assignment lists, controller election after the controller
-  dies, duplicate broker id exits with an error.
+## T4 — Broker (blocks T5, T6)
 
-## T5 — Replication and failover (blocks T6)
+- `SimpleKafkaBroker`: NIO TCP server, CREATE_TOPIC (controller
+  only, forward otherwise), PRODUCE (leader only), FETCH (leader
+  only), METADATA (any broker), REPLICATE/REPLICATE_ACK, leader
+  promotion on broker-death watch, follower truncation on rejoin.
+- Tests: scripted single-broker produce/consume, metadata,
+  not-leader error + retry, errors, restart. Multi-broker
+  replication is T5's, not this ticket's — a single broker *is*
+  the leader here.
 
-- Implement REPLICATE/REPLICATE_ACK, `acks=1` vs `acks=all`,
-  leader promotion, follower truncation on rejoin.
-- Tests: multi-broker replication, acks boundary, leader failover,
-  controller failover with a new topic create.
+## T5 — Client library (blocks T6)
 
-## T6 — Code review and push prep (blocks push)
+- `SimpleKafkaClient`: bootstrap, metadata, send, fetch,
+  create-topic, one retry on "not leader".
+- Tests: client against a live single broker (produce/fetch/
+  metadata round-trips), retry after a metadata change.
+
+## T6 — Producer / consumer APIs (blocks T7)
+
+- `SimpleKafkaProducer`: create-if-missing (3 partitions,
+  replication 2), explicit / key-hashed / random partition, offset
+  reply, `acks` handling.
+- `SimpleKafkaConsumer`: explicit-offset poll, group mode with
+  ZooKeeper committed offsets.
+- Tests: multi-broker replication (`acks=all` and the `acks=1`
+  boundary), leader failover, controller failover with a new
+  topic create, group resume.
+
+## T7 — Code review and push prep (blocks push)
 
 - Two-axis review (Standards + Spec) of the full diff: every SPEC
-  claim traced to a test, every deliberate divergence still listed
-  in SPEC, no test weakened to match code.
-- Full suite green: `python3 -m unittest discover -s tests -v`.
+  claim traced to a test, every extension beyond the tutorial
+  still listed in SPEC, no test weakened to match code.
+- Full suite green: `mvn test` plus the scripted integration runs
+  in TEST_PLAN, with JDK/Maven/ZooKeeper actually present.
 - Update this project's README run section from "planned" to
   verified, with the exact commands run.
 - Push is a separate step after this ticket, on your per-project
@@ -56,6 +82,6 @@ not done.
 
 ## Out of tickets (not in this build)
 
-ZooKeeper/KRaft, ISR, transactions, exactly-once, compaction,
-auth/TLS, rebalancing, real-Kafka client compatibility. If you want
-any of these later, they become new tickets with a spec change first.
+KRaft, ISR, transactions, exactly-once, compaction, auth/TLS,
+rebalancing, real-Kafka client compatibility. If you want any of
+these later, they become new tickets with a spec change first.
