@@ -1,6 +1,6 @@
 # Scratchapixel — Introduction to Ray Tracing
 
-Status: **docs only, awaiting approval. No code, no tests, no push yet.**
+Status: **Code built and tested 2026-10-25: C++, 27 unit + 13 integration checks, all PASS.**
 
 A minimal ray tracer in **C++**, built from the Build Your Own X
 entry for 3D Renderer:
