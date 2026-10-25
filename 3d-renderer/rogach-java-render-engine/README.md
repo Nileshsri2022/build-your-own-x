@@ -1,7 +1,6 @@
 # Rogach — Pure Java 3D Render Engine
 
-Status: **docs only, awaiting further approval.
-No code, no tests, no code push yet.**
+Status: **Code built and tested 2026-10-25: Java 11, 22/22 tests + integration PASS (Swing window manual check still open).**
 
 A small software 3D render engine in **Java 11 + Maven**,
 built from the Build Your Own X entry for 3D Renderer:
