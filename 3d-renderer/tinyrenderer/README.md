@@ -1,6 +1,6 @@
 # tinyrenderer — Build Your Own 3D Renderer (software rasterizer)
 
-Status: **docs only, awaiting approval. No code, no tests, no push yet.**
+Status: **Code built and tested 2026-10-25: C++, 26/26 pixel tests PASS.**
 
 A software 3D renderer in **bare C++**, built from the Build Your
 Own X entry for 3D Renderer:
