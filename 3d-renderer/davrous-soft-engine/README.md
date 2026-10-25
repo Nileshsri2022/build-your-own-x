@@ -1,6 +1,6 @@
 # 3D Soft Engine — Davrous (Build Your Own 3D Renderer, one of 11)
 
-Status: **docs only, no code, no push, no toolchain verification yet.**
+Status: **Code built and tested 2026-10-25: JavaScript (Node), 22/22 tests PASS.**
 This folder is one of eleven parallel docs sets under `3d-renderer/`,
 one per BYOX 3D Renderer link. It covers only the Davrous link;
 it does not replace, revise, or reuse the Avik Das docs in
