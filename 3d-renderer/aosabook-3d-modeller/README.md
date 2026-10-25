@@ -1,6 +1,6 @@
 # A 3D Modeller — Build Your Own 3D Renderer (AOSABOOK link)
 
-Status: **docs only, no code, no push.**
+Status: **Code built and tested 2026-10-25: Python, 28/28 headless tests PASS (window manual checks still open).**
 This folder is one of the eleven separate docs sets under
 `3d-renderer/`, one per BYOX 3D Renderer link. It covers only
 this link; it does not change the other ten folders.
