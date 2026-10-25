@@ -1,6 +1,6 @@
 # Computer Graphics from Scratch — Build Your Own 3D Renderer
 
-Status: **docs only, no code, no push.**
+Status: **Code built and tested 2026-10-25: JavaScript, 32/32 tests PASS (both raytracer and rasterizer sub-builds).**
 This is one of eleven parallel docs sets under `3d-renderer/`,
 one per BYOX 3D Renderer link. This folder covers exactly one
 link and nothing else.
