@@ -1,7 +1,6 @@
 # Scratchapixel Rasterization — Build Your Own 3D Renderer
 
-Status: **docs only, awaiting the user's approval before any code.
-No code, no tests, no code push yet.**
+Status: **Code built and tested 2026-10-25: C++, 26/26 pixel tests PASS.**
 
 A software triangle rasterizer in **C++**, built from one of the
 11 links in the Build Your Own X "Build your own 3D Renderer"
