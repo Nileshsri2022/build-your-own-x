@@ -1,6 +1,6 @@
 # Ray Tracing in One Weekend — Build Your Own 3D Renderer
 
-Status: **docs only, no code, no push yet.**
+Status: **Code built and tested 2026-10-25: C++ Book 1, all tests PASS, final 400x225 render done.**
 This folder is one of the parallel docs sets under `3d-renderer/`,
 one per BYOX 3D Renderer link. It covers exactly one link, not
 all 11, and it is not a replacement for the Avik Das docs in the
