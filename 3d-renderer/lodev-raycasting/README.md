@@ -1,7 +1,6 @@
 # Lodev Raycasting — Build Your Own 3D Renderer (link 3 of 11)
 
-Status: **docs only, awaiting further instruction.
-No code, no tests, no code push yet.**
+Status: **Code built and tested 2026-10-25: C++ raycaster, 55/55 behaviour checks PASS (headless framebuffer; no window run claimed).**
 
 A first-person raycaster in the style of Wolfenstein 3D,
 built from one of the 11 links in the Build Your Own X
