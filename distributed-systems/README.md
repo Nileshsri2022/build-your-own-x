@@ -1,7 +1,7 @@
 # Distributed Systems — Build Your Own Kafka-like System
 
-Status: **code implemented and tested, 2026-10-25. Not yet pushed —
-push needs your per-push approval.**
+Status: **code implemented and tested, 2026-10-25, pushed to
+`Nileshsri2022/build-your-own-x` main.**
 
 A Kafka-like distributed messaging system in **Java 11 + Maven**,
 built from the Build Your Own X entry for Distributed Systems:
@@ -113,7 +113,5 @@ its own, not Kafka's wire protocol). Those are not claimed.
 
 ## Next step
 
-Your per-push approval, then push this `distributed-systems/`
-directory (docs + code + tests, excluding `target/` and broker
-data) to `Nileshsri2022/build-your-own-x` — the repo where the
-docs already live — as one commit.
+This project is done and pushed. The next BYOX project starts only
+on your go, one by one, docs first, as before.
